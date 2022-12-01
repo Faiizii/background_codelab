@@ -1,16 +1,26 @@
-# background_codelab
+# Background Locations
+This project is a Demo Project for Location updates in background. Make sure to add your google map key in
 
-Codelab for background location example
+```swift
+override func application(
+    _ application: UIApplication,
+    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+  ) -> Bool {
+    GMSServices.provideAPIKey("YOUR KEY HERE")
+    GeneratedPluginRegistrant.register(with: self)
 
-## Getting Started
+    SwiftFlutterForegroundTaskPlugin.setPluginRegistrantCallback(registerPlugins)
+    if #available(iOS 10.0, *) {
+      UNUserNotificationCenter.current().delegate = self as? UNUserNotificationCenterDelegate
+    }
 
-This project is a starting point for a Flutter application.
+    return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+  }
+```
+and 
+```xml
+<meta-data android:name="com.google.android.geo.API_KEY"
+           android:value="YOUR KEY HERE"/>
+```
+It is using [Flutter Foreground Task](https://pub.dev/packages/flutter_foreground_task) for foreground service. 
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
